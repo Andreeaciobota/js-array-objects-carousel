@@ -149,3 +149,68 @@ function extractElement(array){
   }
   return element
 }
+
+
+// funzione per scorrimento automatico 
+function moveToNext() {
+  // Rimuovi la classe active d
+  items[position].classList.remove("active");
+  thumbs[position].classList.remove("thumb-active");
+
+  // posizione per passare al elemento succesivo 
+  position++;
+
+
+  if (position >= items.length) {
+      position = 0;
+  }
+
+  // Aggiungo la classe active all'elemento successivo
+  items[position].classList.add("active");
+  thumbs[position].classList.add("thumb-active");
+}
+
+// ioposto intervallo di scorrimento 2 secondi 
+const autoScrollInterval = setInterval(moveToNext, 2000);
+
+// click sul pulsante "Avanti"
+nextArrw.addEventListener("click", function () {
+  moveToNext();
+});
+
+// click sul pulsante "Indietro"
+prevArrw.addEventListener("click", function () {
+  // Rimuoviola classe active dall'elemento corrente
+  items[position].classList.remove("active");
+  thumbs[position].classList.remove("thumb-active");
+
+
+  position--;
+
+  if (position < 0) {
+      position = items.length - 1;
+  }
+
+  // Do la classe active al elemento precedente 
+  items[position].classList.add("active");
+  thumbs[position].classList.add("thumb-active");
+});
+
+// ciclo per par passare la miniature dal immagine corrente alla succesiva 
+
+for (let i = 0; i < thumbs.length; i++) {
+  const clickedThumb = thumbs[i];
+
+  clickedThumb.addEventListener("click", function () {
+      items[position].classList.remove("active");
+      thumbs[position].classList.remove("thumb-active");
+
+      // Aggiorno la posizione corrente
+      position = i;
+
+      items[position].classList.add("active");
+      thumbs[position].classList.add("thumb-active");
+  });
+}
+
+// ...
